@@ -24,7 +24,7 @@ Let's have a look at, how to store some data and manipulate them using simd.
 ```go
 package main
 
-import "github.com/sonyarouje/simdb/db"
+import "github.com/adampresley/simdb"
 
 type Customer struct {
 	CustID string `json:"custid"`
@@ -48,9 +48,9 @@ func (c Customer) ID() (string, interface{}) {
 
 func main() {
 	var err error
-	var driver *db.Driver
+	var driver *simdb.Driver
 
-	if driver, err = db.New("data"); err != nil {
+	if driver, err = simdb.New("data"); err != nil {
 		panic(err)
 	}
  
