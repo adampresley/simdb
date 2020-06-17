@@ -178,8 +178,6 @@ func (d *Driver) Raw() interface{} {
 
 //RawArray will return the data in map array type
 func (d *Driver) RawArray() []interface{} {
-	fmt.Println("calling rawarray")
-	fmt.Printf("%#v\n", d.jsonContent)
 	if aa, ok := d.jsonContent.([]interface{}); ok {
 		return aa
 	}
@@ -232,7 +230,6 @@ func (d *Driver) Update(entity Entity) (err error) {
 				if v, ok := record[field]; ok && v == entityID {
 					records[indx] = entity
 					couldUpdate = true
-					fmt.Printf("Updating %s with ID %s \n", entName, entityID)
 				}
 			}
 		}
@@ -270,7 +267,6 @@ func (d *Driver) Delete(entity Entity) (err error) {
 					records[indx] = entity
 					newRecordArray = append(newRecordArray, record)
 				} else {
-					fmt.Printf("Deleting %s with ID %s \n", entName, entityID)
 					couldDelete = true
 				}
 			}
