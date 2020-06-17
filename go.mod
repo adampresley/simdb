@@ -1,3 +1,3 @@
-module github.com/adampresley/simdb/v1
+module github.com/adampresley/simdb
 
 go 1.14

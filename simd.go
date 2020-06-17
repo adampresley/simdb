@@ -63,6 +63,7 @@ func New(dir string) (*Driver, error) {
 		queryMap: loadDefaultQueryMap(),
 		mutex:    &sync.Mutex{},
 	}
+
 	err := createDirIfNotExist(dir)
 	return driver, err
 }
@@ -74,10 +75,12 @@ func New(dir string) (*Driver, error) {
 func (d *Driver) Open(entity Entity) *Driver {
 	d.queries = nil
 	d.entityDealingWith = entity
+
 	db, err := d.openDB(entity)
 	d.originalJSON = db
 	d.jsonContent = d.originalJSON
 	d.isOpened = true
+
 	if err != nil {
 		d.addError(err)
 	}
