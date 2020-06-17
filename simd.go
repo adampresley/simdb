@@ -1,5 +1,5 @@
 //Package db A simple library to persist structs in json file and perform queries and CRUD operations
-package db
+package simdb
 
 import (
 	"encoding/json"
