@@ -3,17 +3,18 @@ package simdb
 import (
 	"errors"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/spf13/afero"
 )
 
-func createDirIfNotExist(dir string) error {
-
-	if _, err := os.Stat(dir); err == nil {
+func createDirIfNotExist(fs afero.Fs, dir string) error {
+	if _, err := fs.Stat(dir); err == nil {
 		return nil
 	}
-	err := os.Mkdir(dir, 0755)
+
+	err := fs.Mkdir(dir, 0755)
 	return err
 }
 

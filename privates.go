@@ -25,8 +25,9 @@ func (d *Driver) openDB(entity interface{}) ([]interface{}, error) {
 	}
 	file := filepath.Join(d.dir, entityName)
 
-	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
+	f, err := d.fs.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
 	defer f.Close()
+
 	if err != nil {
 		return nil, err
 	}
@@ -35,6 +36,7 @@ func (d *Driver) openDB(entity interface{}) ([]interface{}, error) {
 	if readErr != nil {
 		return nil, readErr
 	}
+
 	array := make([]interface{}, 0)
 	json.Unmarshal(b, &array)
 
@@ -46,11 +48,13 @@ func (d *Driver) isDBOpened() bool {
 		err := errors.New("should call Open() before doing any query on json file")
 		d.addError(err)
 	}
+
 	return d.isOpened
 }
 
 func (d *Driver) getEntityName() (string, error) {
 	typeName := strings.Split(reflect.TypeOf(d.entityDealingWith).String(), ".")
+
 	if len(typeName) <= 0 {
 		return "", fmt.Errorf("unable infer the type of the entity passed")
 	}
@@ -68,13 +72,15 @@ func (d *Driver) readAppend(entity interface{}) (err error) {
 func (d *Driver) writeAll(entities []interface{}) (err error) {
 	entityName, err := d.getEntityName()
 	file := filepath.Join(d.dir, entityName)
-	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
+
+	f, err := d.fs.OpenFile(file, os.O_RDWR|os.O_CREATE, 0666)
 	defer f.Close()
 
-	b, err := json.MarshalIndent(entities, "", "\t")
+	b, err := json.Marshal(entities)
 	if err != nil {
 		return
 	}
+
 	f.Truncate(0)
 	f.Seek(0, 0)
 	f.Write(b)
