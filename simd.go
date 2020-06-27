@@ -178,6 +178,7 @@ func (d *Driver) First() *Driver {
 
 	d.wantSingleRecord = true
 	records := d.Get().RawArray()
+
 	if len(records) > 0 {
 		d.jsonContent = records[0]
 	} else {
@@ -221,7 +222,7 @@ func (d *Driver) AsEntity(output interface{}) (err error) {
 	}
 
 	if d.wantSingleRecord {
-		if rows, ok := d.originalJSON.([]interface{}); ok {
+		if rows, ok := d.jsonContent.([]interface{}); ok {
 			if len(rows) == 0 {
 				return ErrZeroRecords
 			}
