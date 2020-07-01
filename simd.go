@@ -267,7 +267,7 @@ func (d *Driver) Update(entity Entity) (err error) {
 	if couldUpdate {
 		err = d.writeAll(records)
 	} else {
-		err = fmt.Errorf("failed to update, unable to find any %s record with %s %s", entName, field, entityID)
+		err = fmt.Errorf("failed to update, unable to find any %s record with %s %v", entName, field, entityID)
 	}
 
 	return
