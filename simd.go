@@ -257,7 +257,7 @@ func (d *Driver) Update(entity Entity) (err error) {
 	if len(records) > 0 {
 		for indx, item := range records {
 			if record, ok := item.(map[string]interface{}); ok {
-				if v, ok := record[field]; ok && v == entityID {
+				if v, ok := record[field]; ok && fmt.Sprintf("%v", v) == fmt.Sprintf("%v", entityID) {
 					records[indx] = entity
 					couldUpdate = true
 				}
